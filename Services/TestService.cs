@@ -7,17 +7,33 @@ namespace AsyncAwaitTestWebApplication.Services
         private readonly ILogger<TestService> _logger = logger;
         private readonly TestRepository _repository = testRepository;
 
-        public async Task<string?> TestMethod()
+        public string TestMethod()
         {
             int beforeThreadId = Environment.CurrentManagedThreadId;
 
-            var result = await _repository.TestMethod();
+            var result = _repository.TestMethod();
 
             int afterThreadId = Environment.CurrentManagedThreadId;
 
             if (beforeThreadId != afterThreadId)
             {
                 _logger.LogInformation("[Service] beforeThreadId: {BeforeThreadId}, afterThreadId: {AfterThreadId}", beforeThreadId, afterThreadId);
+            }
+
+            return result;
+        }
+
+        public async Task<string> TestMethodAsync()
+        {
+            int beforeThreadId = Environment.CurrentManagedThreadId;
+
+            var result = await _repository.TestMethodAsync();
+
+            int afterThreadId = Environment.CurrentManagedThreadId;
+
+            if (beforeThreadId != afterThreadId)
+            {
+                _logger.LogInformation("[Service-A] beforeThreadId: {BeforeThreadId}, afterThreadId: {AfterThreadId}", beforeThreadId, afterThreadId);
             }
 
             return result;

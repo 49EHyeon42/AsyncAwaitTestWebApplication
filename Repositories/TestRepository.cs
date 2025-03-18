@@ -4,7 +4,23 @@
     {
         private readonly ILogger<TestRepository> _logger = logger;
 
-        public async Task<string?> TestMethod()
+        public string TestMethod()
+        {
+            int beforeThreadId = Environment.CurrentManagedThreadId;
+
+            var result = GetStringAsync().Result;
+
+            int afterThreadId = Environment.CurrentManagedThreadId;
+
+            if (beforeThreadId != afterThreadId)
+            {
+                _logger.LogInformation("[Repository] beforeThreadId: {BeforeThreadId}, afterThreadId: {AfterThreadId}", beforeThreadId, afterThreadId);
+            }
+
+            return result;
+        }
+
+        public async Task<string> TestMethodAsync()
         {
             int beforeThreadId = Environment.CurrentManagedThreadId;
 
@@ -14,7 +30,7 @@
 
             if (beforeThreadId != afterThreadId)
             {
-                _logger.LogInformation("[Repository] beforeThreadId: {BeforeThreadId}, afterThreadId: {AfterThreadId}", beforeThreadId, afterThreadId);
+                _logger.LogInformation("[Repository-A] beforeThreadId: {BeforeThreadId}, afterThreadId: {AfterThreadId}", beforeThreadId, afterThreadId);
             }
 
             return result;

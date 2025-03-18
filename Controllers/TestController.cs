@@ -11,17 +11,34 @@ namespace AsyncAwaitTestWebApplication.Controllers
         private readonly TestService _testService = testService;
 
         [HttpGet]
-        public async Task<IActionResult> TestMethod()
+        public IActionResult TestMethod()
         {
             int beforeThreadId = Environment.CurrentManagedThreadId;
 
-            var result = await _testService.TestMethod();
+            var result = _testService.TestMethod();
 
             int afterThreadId = Environment.CurrentManagedThreadId;
 
             if (beforeThreadId != afterThreadId)
             {
                 _logger.LogInformation("[Controller] beforeThreadId: {BeforeThreadId}, afterThreadId: {AfterThreadId}", beforeThreadId, afterThreadId);
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet("A")]
+        public async Task<IActionResult> TestMethodAsync()
+        {
+            int beforeThreadId = Environment.CurrentManagedThreadId;
+
+            var result = await _testService.TestMethodAsync();
+
+            int afterThreadId = Environment.CurrentManagedThreadId;
+
+            if (beforeThreadId != afterThreadId)
+            {
+                _logger.LogInformation("[Controller-A] beforeThreadId: {BeforeThreadId}, afterThreadId: {AfterThreadId}", beforeThreadId, afterThreadId);
             }
 
             return Ok(result);
