@@ -1,0 +1,8 @@
+services:
+  k6:
+    image: grafana/k6
+    volumes:
+      - ./test.js:/test.js
+    entrypoint: [ "sh", "-c", "k6 run /test.js" ]
+
+#  docker-compose up --build
