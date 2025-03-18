@@ -21,7 +21,7 @@ namespace AsyncAwaitTestWebApplication.Controllers
 
             if (beforeThreadId != afterThreadId)
             {
-                _logger.LogInformation($"[Controller] beforeThreadId: {beforeThreadId}, afterThreadId: {afterThreadId}");
+                _logger.LogInformation("[Controller] beforeThreadId: {BeforeThreadId}, afterThreadId: {AfterThreadId}", beforeThreadId, afterThreadId);
             }
 
             return Ok(result);

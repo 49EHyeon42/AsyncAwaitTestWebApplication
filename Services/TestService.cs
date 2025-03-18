@@ -17,7 +17,7 @@ namespace AsyncAwaitTestWebApplication.Services
 
             if (beforeThreadId != afterThreadId)
             {
-                _logger.LogInformation($"[Service] beforeThreadId: {beforeThreadId}, afterThreadId: {afterThreadId}");
+                _logger.LogInformation("[Service] beforeThreadId: {BeforeThreadId}, afterThreadId: {AfterThreadId}", beforeThreadId, afterThreadId);
             }
 
             return result;

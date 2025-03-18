@@ -14,7 +14,7 @@
 
             if (beforeThreadId != afterThreadId)
             {
-                _logger.LogInformation($"[Repository] beforeThreadId: {beforeThreadId}, afterThreadId: {afterThreadId}");
+                _logger.LogInformation("[Repository] beforeThreadId: {BeforeThreadId}, afterThreadId: {AfterThreadId}", beforeThreadId, afterThreadId);
             }
 
             return result;
