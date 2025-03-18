@@ -13,11 +13,16 @@ namespace AsyncAwaitTestWebApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> TestMethod()
         {
-            _logger.LogInformation("[Controller] Before await - Thread ID: {ThreadId}", Environment.CurrentManagedThreadId);
+            int beforeThreadId = Environment.CurrentManagedThreadId;
 
             var result = await _testService.TestMethod();
 
-            _logger.LogInformation("[Controller] After await - Thread ID: {ThreadId}", Environment.CurrentManagedThreadId);
+            int afterThreadId = Environment.CurrentManagedThreadId;
+
+            if (beforeThreadId != afterThreadId)
+            {
+                _logger.LogInformation($"[Controller] beforeThreadId: {beforeThreadId}, afterThreadId: {afterThreadId}");
+            }
 
             return Ok(result);
         }

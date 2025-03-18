@@ -6,22 +6,23 @@
 
         public async Task<string?> TestMethod()
         {
-            _logger.LogInformation("[Repository] Before await - Thread ID: {ThreadId}", Environment.CurrentManagedThreadId);
+            int beforeThreadId = Environment.CurrentManagedThreadId;
 
             var result = await GetStringAsync();
 
-            _logger.LogInformation("[Repository] After await - Thread ID: {ThreadId}", Environment.CurrentManagedThreadId);
+            int afterThreadId = Environment.CurrentManagedThreadId;
+
+            if (beforeThreadId != afterThreadId)
+            {
+                _logger.LogInformation($"[Repository] beforeThreadId: {beforeThreadId}, afterThreadId: {afterThreadId}");
+            }
 
             return result;
         }
 
         private async Task<string> GetStringAsync()
         {
-            _logger.LogInformation("[Repository] Before delay - Thread ID: {ThreadId}", Environment.CurrentManagedThreadId);
-
-            await Task.Delay(1000); // 1초 대기
-
-            _logger.LogInformation("[Repository] After delay - Thread ID: {ThreadId}", Environment.CurrentManagedThreadId);
+            await Task.Delay(1000);
 
             return "Hello, sync/await!";
         }

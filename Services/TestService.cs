@@ -9,11 +9,16 @@ namespace AsyncAwaitTestWebApplication.Services
 
         public async Task<string?> TestMethod()
         {
-            _logger.LogInformation("[Service] Before await - Thread ID: {ThreadId}", Environment.CurrentManagedThreadId);
+            int beforeThreadId = Environment.CurrentManagedThreadId;
 
             var result = await _repository.TestMethod();
 
-            _logger.LogInformation("[Service] After await - Thread ID: {ThreadId}", Environment.CurrentManagedThreadId);
+            int afterThreadId = Environment.CurrentManagedThreadId;
+
+            if (beforeThreadId != afterThreadId)
+            {
+                _logger.LogInformation($"[Service] beforeThreadId: {beforeThreadId}, afterThreadId: {afterThreadId}");
+            }
 
             return result;
         }
